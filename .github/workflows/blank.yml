@@ -30,6 +30,7 @@ jobs:
       COMMENT_FILE: ${{ github.event.comment.path }}
       COMMENT_BODY: ${{ github.event.comment.body }}
       COMMENT_NUMBER: ${{ github.event.issue.number }}
+      IS_ISSUE_COMM_PRESENT: ${{ github.event.comment != null }} 
     steps:
       - name: Test Object Directly
         run: |
@@ -37,6 +38,7 @@ jobs:
           echo ">>>${{ github.event.comment }}<<<"
           echo ">>>${{ github.event.pull_request}}<<<"
           echo ">>>${{ github.event.review }}<<<"
+          echo "$IS_ISSUE_COMM_PRESENT"
           
 
           if [[ ! -z "${{ github.event.comment }}" ]]; then
