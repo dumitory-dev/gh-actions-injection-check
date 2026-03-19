@@ -11,6 +11,7 @@ on:
     types: [submitted, edited, dismissed]
   pull_request_review_comment:
     types: [created]
+
 jobs:
   test_job:
     runs-on: ubuntu-latest
@@ -40,4 +41,4 @@ jobs:
           echo "--- COMMENT BODY ---"
           echo ">>>${{ github.event.comment.body }}<<<"
 
-          
+  
