@@ -27,7 +27,8 @@ jobs:
           else
             TEXT=`echo -e "<b>"$COMMENT_AUTHOR"</b> posted the following comment to issue <a href=\"$COMMENT_URL\">#"$COMMENT_NUMBER"</a>:\n<i>"$ESCAPED_TEXT"</i>"`
           fi
-          echo TEXT
+          echo $TEXT
+          echo $ESCAPED_TEXT
           
       - name: Test Object with toJSON
         run: |
