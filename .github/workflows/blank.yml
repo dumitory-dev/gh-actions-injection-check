@@ -15,6 +15,21 @@ on:
 jobs:
   test_job:
     runs-on: ubuntu-latest
+    env:
+      PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+      PR_NAME: ${{ github.event.pull_request.title }}
+      PR_BASE: ${{ github.event.pull_request.base.ref }}
+      PR_URL: ${{ github.event.pull_request.html_url }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      PR_MERGED: ${{ github.event.pull_request.merged_by.login }}
+      REVIEW_STATE: ${{ github.event.review.state }}
+      REVIEW_AUTHOR: ${{ github.event.review.user.login }}
+      REVIEW_COMMENT: ${{ github.event.review.body }}
+      COMMENT_AUTHOR: ${{ github.event.comment.user.login }}
+      COMMENT_URL: ${{ github.event.comment.html_url }}
+      COMMENT_FILE: ${{ github.event.comment.path }}
+      COMMENT_BODY: ${{ github.event.comment.body }}
+      COMMENT_NUMBER: ${{ github.event.issue.number }}
     steps:
       - name: Test Object Directly
         run: |
