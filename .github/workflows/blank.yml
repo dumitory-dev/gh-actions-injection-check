@@ -31,6 +31,10 @@ jobs:
       COMMENT_BODY: ${{ github.event.comment.body }}
       COMMENT_NUMBER: ${{ github.event.issue.number }}
       IS_ISSUE_COMM_PRESENT: ${{ github.event.comment != null }} 
+      HAS_PULL_REQUEST: ${{ github.event.pull_request != null }}
+      HAS_COMMENT: ${{ github.event.comment != null }}
+      HAS_REVIEW: ${{ github.event.review != null }}
+      HAS_WORKFLOW_RUN: ${{ github.event.workflow_run != null }}
     steps:
       - name: Test Object Directly
         run: |
