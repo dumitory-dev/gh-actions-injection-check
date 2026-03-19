@@ -1,8 +1,16 @@
 name: Test Object Interpolation
 on:
+  pull_request:
+    types: [opened, synchronize, closed]
   issue_comment:
     types: [created]
-
+  workflow_run:
+    workflows: [Universum check]
+    types: [completed]
+  pull_request_review:
+    types: [submitted, edited, dismissed]
+  pull_request_review_comment:
+    types: [created]
 jobs:
   test_job:
     runs-on: ubuntu-latest
@@ -11,6 +19,15 @@ jobs:
         run: |
           echo "--- DIRECT OBJECT ---"
           echo ">>>${{ github.event.comment }}<<<"
+
+          if [[ ! -z "${{ github.event.comment }}" ]]; then
+          ESCAPED_TEXT=`echo -e "$COMMENT_BODY"| sed 's/\&/\&amp;/g' | sed 's/</\&lt;/g' | sed 's/>/\&gt;/g'`
+          if [[ ! -z "${{ github.event.pull_request }}" ]]; then
+            TEXT=`echo -e "<b>"$COMMENT_AUTHOR"</b> posted the following comment to file <i>"$COMMENT_FILE"</i> in <a href=\"$COMMENT_URL\">PR#"$PR_NUMBER"</a>:\n<i>"$ESCAPED_TEXT"</i>"`
+          else
+            TEXT=`echo -e "<b>"$COMMENT_AUTHOR"</b> posted the following comment to issue <a href=\"$COMMENT_URL\">#"$COMMENT_NUMBER"</a>:\n<i>"$ESCAPED_TEXT"</i>"`
+          fi
+          echo TEXT
           
       - name: Test Object with toJSON
         run: |
@@ -21,3 +38,5 @@ jobs:
         run: |
           echo "--- COMMENT BODY ---"
           echo ">>>${{ github.event.comment.body }}<<<"
+
+          
