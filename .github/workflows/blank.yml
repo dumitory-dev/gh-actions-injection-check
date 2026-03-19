@@ -1,0 +1,23 @@
+name: Test Object Interpolation
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  test_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test Object Directly
+        run: |
+          echo "--- DIRECT OBJECT ---"
+          echo ">>>${{ github.event.comment }}<<<"
+          
+      - name: Test Object with toJSON
+        run: |
+          echo "--- TOJSON OBJECT ---"
+          echo ">>>${{ toJSON(github.event.comment) }}<<<"
+          
+      - name: Test String Property
+        run: |
+          echo "--- COMMENT BODY ---"
+          echo ">>>${{ github.event.comment.body }}<<<"
